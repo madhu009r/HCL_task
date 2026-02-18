@@ -1,0 +1,6 @@
+@StudentEFWeb2_HostAddress = http://localhost:5071
+
+GET {{StudentEFWeb2_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

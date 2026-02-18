@@ -1,0 +1,107 @@
+﻿@page "/students"
+@inject HttpClient Http
+
+<h3>Students</h3>
+
+<h4>Add Student</h4>
+
+<EditForm Model="@newStudent" OnValidSubmit="CreateStudent">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="mb-2">
+        <label>First Name</label>
+        <InputText class="form-control" @bind-Value="newStudent.FirstName" />
+    </div>
+
+    <div class="mb-2">
+        <label>Last Name</label>
+        <InputText class="form-control" @bind-Value="newStudent.LastName" />
+    </div>
+
+    <div class="mb-2">
+        <label>Email</label>
+        <InputText class="form-control" @bind-Value="newStudent.Email" />
+    </div>
+
+    <div class="mb-2">
+        <label>Date Of Birth</label>
+        <InputDate class="form-control" @bind-Value="newStudent.DateOfBirth" />
+    </div>
+
+    <div class="mb-2">
+        <label>Department Id</label>
+        <InputNumber class="form-control" @bind-Value="newStudent.DepartmentId" />
+    </div>
+
+    <button type="submit" class="btn btn-success">Create</button>
+</EditForm>
+
+<hr />
+
+@if (students == null)
+{
+    <p>Loading...</p>
+}
+else
+{
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Department</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var s in students)
+            {
+                <tr>
+                    <td>@s.Id</td>
+                    <td>@s.FullName</td>
+                    <td>@s.Email</td>
+                    <td>@s.DepartmentId</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+
+    private List<StudentDto>? students;
+    private CreateStudentDto newStudent = new();
+    private int pageNumber = 1;
+    private int pageSize = 5;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadStudents();
+    }
+
+    private async Task LoadStudents()
+    {
+        var result = await Http.GetFromJsonAsync<PageResponse<StudentDto>>(
+            $"students?pageNumber={pageNumber}&pageSize={pageSize}");
+
+        students = result?.Data;
+    }
+
+    private async Task CreateStudent()
+    {
+        Console.WriteLine("Create button clicked");
+        var response = await Http.PostAsJsonAsync("students", newStudent);
+
+        if (response.IsSuccessStatusCode)
+        {
+            newStudent = new CreateStudentDto(); // reset form
+            await LoadStudents(); // reload list
+        }
+        else
+        {
+            var error = await response.Content.ReadAsStringAsync();
+            Console.WriteLine(error);
+        }
+    }
+}

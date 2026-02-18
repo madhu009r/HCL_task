@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="../StudentEFWeb2/StudentEFWeb2.csproj" Id="86a50d79-d736-40f2-baed-27b310479e07" />
+  <Project Path="StudentEFApi.csproj" />
+</Solution>

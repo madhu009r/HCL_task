@@ -8,7 +8,8 @@ import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-root',
   imports: [CommonModule, FormsModule],
-  templateUrl: './app.html'
+  templateUrl: './app.html',
+  
 })
 export class App implements OnInit{
 
@@ -90,13 +91,13 @@ toggleDescription(id: number) {
   this.expandedTicketId = this.expandedTicketId === id ? null : id;
 }
 
-
 viewTicket(t: any) {
   this.fd.getTicketById(t.id).subscribe((fullTicket: any) => {
     this.selectedTicket = fullTicket;
     this.expandedTicketId = t.id;
   });
 }
+
 
    editTicket(ticket: any) {
     console.log('Selected:', this.selectedTicket);

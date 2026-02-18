@@ -1,0 +1,8 @@
+<Solution>
+  <Project Path="../CollegeClient/CollegeClient.csproj" Id="f6ef2aa9-2008-4c87-b774-926134c3cbdf" />
+  <Project Path="../CollegeGateway/CollegeGateway.csproj" Id="8c5dd9d4-24a3-4992-a9d5-587d42ef5283" />
+  <Project Path="../CourseService/CourseService.csproj" />
+  <Project Path="../DepartmentService/DepartmentService.csproj" Id="d0d32aaa-4e7a-4e0c-8241-48c555b8f052" />
+  <Project Path="../TeacherService/TeacherService.csproj" />
+  <Project Path="StudentService.csproj" />
+</Solution>

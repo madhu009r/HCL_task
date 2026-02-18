@@ -1,0 +1,117 @@
+﻿@page "/students"
+@rendermode InteractiveServer
+@using BlazorCRUD.Models
+@using BlazorCRUD.Data
+@using Microsoft.EntityFrameworkCore
+@inject StudentDbContext db
+
+<h3 class="mb-3">Student Management</h3>
+
+<!-- Student Form -->
+<EditForm Model="@student"
+          OnValidSubmit="SaveStudent"
+          FormName="StudentForm"
+          class="mb-4">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <div class="mb-2">
+        <label>Name</label>
+        <InputText class="form-control"
+                   @bind-Value="student.Name" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">
+        @(student.Id == 0 ? "Add Student" : "Update Student")
+    </button>
+</EditForm>
+
+<hr />
+
+<p><strong>Total Students:</strong> @students.Count</p>
+
+@if (students.Count == 0)
+{
+    <p class="text-danger">No students found.</p>
+}
+else
+{
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Name</th>
+        
+                <th style="width:150px;">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var s in students)
+            {
+                <tr>
+                    <td>@s.Name</td>
+                
+                    <td>
+                        <button class="btn btn-sm btn-warning me-2"
+                                @onclick="() => EditStudent(s)">
+                            Edit
+                        </button>
+
+                        <button class="btn btn-sm btn-danger"
+                                @onclick="() => DeleteStudent(s.Id)">
+                            Delete
+                        </button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+
+    private List<Student> students = new();
+    private Student student = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadStudents();
+    }
+
+    private async Task LoadStudents()
+    {
+        students = await db.Students
+                           .AsNoTracking()
+                           .ToListAsync();
+    }
+
+    private async Task SaveStudent()
+    {
+        Console.WriteLine("Name: " + student.Name);
+
+        if (student.Id == 0)
+            db.Students.Add(student);
+        else
+            db.Students.Update(student);
+
+        await db.SaveChangesAsync();
+
+        student = new Student();
+        await LoadStudents();
+    }
+
+    private void EditStudent(Student s)
+    {
+        student = s;
+    }
+
+    private async Task DeleteStudent(int id)
+    {
+        var existing = await db.Students.FindAsync(id);
+        if (existing != null)
+        {
+            db.Students.Remove(existing);
+            await db.SaveChangesAsync();
+            await LoadStudents();
+        }
+    }
+
+}
