@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Simple Text Generator</title>
+</head>
+<body>
+
+    <h2>Text Generation Model</h2>
+
+    <input type="text" id="inputText" placeholder="Enter text here">
+    <button onclick="generateText()">Generate</button>
+
+    <h3>Output:</h3>
+    <p id="output"></p>
+<h3>Translate Story</h3>
+
+<select id="translateLanguage">
+    <option value="ta">Tamil</option>
+    <option value="hi">Hindi</option>
+    <option value="fr">French</option>
+    <option value="es">Spanish</option>
+</select>
+
+<button onclick="translateStory()">Translate</button>
+
+<p id="translatedOutput"></p>
+<h3>Generated Image</h3>
+<button onclick="generateImage()">Generate Image</button>
+<br><br>
+<img id="generatedImage" width="500" />
+
+<script>
+
+    let currentStory = "";
+function generateText() {
+    const text = document.getElementById("inputText").value;
+
+    fetch("/generate", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ text: text })
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log("Generate response:", data);
+        currentStory = data.result;
+        console.log("CurrentStory:", currentStory);
+        document.getElementById("output").innerText = currentStory;
+    })
+    .catch(error => console.error("Error:", error));
+}
+
+function translateStory() {
+
+    if (!currentStory) {
+        alert("Please generate a story first!");
+        return;
+    }
+
+    const language = document.getElementById("translateLanguage").value;
+
+    fetch("/translate", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            text: currentStory,
+            language: language
+        })
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error("Server error");
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log("Translation response:", data);  // DEBUG
+        document.getElementById("translatedOutput").innerText = data.result;
+    })
+    .catch(error => {
+        console.error("Fetch error:", error);
+        alert("Translation failed. Check backend.");
+    });
+}
+
+function generateImage() {
+
+    if (!currentStory) {
+        alert("Generate story first!");
+        return;
+    }
+
+    fetch("/generate-image", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            text: document.getElementById("inputText").value
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log("Image URL:", data.image_url);
+        document.getElementById("generatedImage").src = data.image_url;
+    })
+    .catch(error => console.error("Image error:", error));
+}
+</script>
+
+</body>
+</html>

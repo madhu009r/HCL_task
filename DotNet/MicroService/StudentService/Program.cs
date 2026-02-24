@@ -6,7 +6,7 @@ using StudentService.Service;
 using StudentService.Validators;
 
 var builder = WebApplication.CreateBuilder(args);
-
+`
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -20,6 +20,11 @@ builder.Services.AddDbContext<StudentDbContext>(options =>
     ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("DefaultConnection"))
     )
    );
+
+/*
+ * builder.Services.AddDbContext<>(options =>
+ * options.UseMySql(buil
+ */
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll",

@@ -36,3 +36,12 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+//var 
+/*
+ * var builder = WebApplication.CreateBuilder(args);
+ * 
+ * builder.Services.AddControllers(
+ 
+ 
+ */

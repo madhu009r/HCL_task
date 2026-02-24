@@ -21,11 +21,22 @@ namespace StudentEFApi.Controllers
         public IActionResult Get()
         {
 
-            
-                return Ok(context.student);
-            
+
+            return Ok(context.student);
+
             //return BadRequest("No students found.");
         }
+
+
+        [HttpGet("{id}")]
+
+        public IActionResult GetbyId(int id)
+        {
+            var book= _conte
+        }
+
+
+
 
         [HttpPost("{id}")]
 

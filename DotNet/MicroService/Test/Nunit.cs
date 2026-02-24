@@ -23,6 +23,7 @@ namespace Test
         {
             var result = _calculator.Add(2, 3);
             Assert.Equals(5, result);
+         
         }
 
         [Test]
