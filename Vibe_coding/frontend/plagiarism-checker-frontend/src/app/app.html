@@ -1,0 +1,32 @@
+<div class="container">
+  <h1>Plagiarism Checker</h1>
+
+  <div class="input-section">
+    <h2>Input Text</h2>
+    <div class="input-type">
+      <input type="radio" id="text" name="inputType" value="text" [(ngModel)]="inputType">
+      <label for="text">Enter Text</label>
+      <input type="radio" id="file" name="inputType" value="file" [(ngModel)]="inputType">
+      <label for="file">Upload File</label>
+    </div>
+
+    <div *ngIf="inputType === 'text'" class="text-input">
+      <textarea [(ngModel)]="inputText" placeholder="Enter your text here..." rows="10" cols="50"></textarea>
+    </div>
+
+    <div *ngIf="inputType === 'file'" class="file-input">
+      <input type="file" (change)="onFileSelected($event)" accept=".txt">
+    </div>gh repo clone rajandubey/rajandubey.github.io
+
+    <button (click)="checkPlagiarism()" [disabled]="!canCheck">Check Plagiarism</button>
+  </div>
+
+  <div class="results-section" *ngIf="results">
+    <h2>Results</h2>
+    <p>Plagiarism Score: {{ results.score }}%</p>
+    <div *ngFor="let match of results.matches" class="match">
+      <p>Matched Source: {{ match.source }}</p>
+      <p>Similarity: {{ match.similarity }}%</p>
+    </div>
+  </div>
+</div>

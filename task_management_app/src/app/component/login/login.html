@@ -1,0 +1,32 @@
+<p>login works!</p>
+<div class="container mt-5">
+
+<h2 class="text-center">Login</h2>
+
+<form (ngSubmit)="LoginUser()" class="mt-4">
+
+<div class="mb-3">
+<label>Username</label>
+<input
+type="text"
+class="form-control"
+[(ngModel)]="loginData.username"
+name="username">
+</div>
+
+<div class="mb-3">
+<label>Password</label>
+<input
+type="password"
+class="form-control"
+[(ngModel)]="loginData.password"
+name="password">
+</div>
+
+<button class="btn btn-primary w-100">
+Login
+</button>
+
+</form>
+
+</div>

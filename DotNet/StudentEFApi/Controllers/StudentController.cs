@@ -26,20 +26,8 @@ namespace StudentEFApi.Controllers
 
             //return BadRequest("No students found.");
         }
-
-
-        [HttpGet("{id}")]
-
-        public IActionResult GetbyId(int id)
-        {
-            var book= _conte
-        }
-
-
-
-
+       
         [HttpPost("{id}")]
-
         public IActionResult Create(Student student)
         {
             if (context.student != null)

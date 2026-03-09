@@ -6,7 +6,7 @@ using StudentService.Service;
 using StudentService.Validators;
 
 var builder = WebApplication.CreateBuilder(args);
-`
+                         
 // Add services to the container.
 
 builder.Services.AddControllers();
