@@ -1,0 +1,31 @@
+<div class="container mt-5">
+
+<h2>My Tasks</h2>
+
+<table class="table table-bordered">
+
+<tr>
+<th>Title</th>
+<th>Description</th>
+<th>Status</th>
+<th>Action</th>
+</tr>
+
+<tr *ngFor="let t of tasks">
+
+<td>{{t.title}}</td>
+<td>{{t.description}}</td>
+<td>{{t.status}}</td>
+
+<td>
+<button class="btn btn-danger"
+(click)="deleteTask(t.taskId)">
+Delete
+</button>
+</td>
+
+</tr>
+
+</table>
+
+</div>

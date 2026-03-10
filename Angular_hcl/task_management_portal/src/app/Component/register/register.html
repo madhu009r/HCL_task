@@ -1,0 +1,38 @@
+<div class="container mt-5">
+
+<h2>Register</h2>
+
+<input class="form-control"
+placeholder="Name"
+[(ngModel)]="user.name">
+
+<br>
+
+<input class="form-control"
+placeholder="Email"
+[(ngModel)]="user.email">
+
+<br>
+
+<input type="password"
+class="form-control"
+placeholder="Password"
+[(ngModel)]="user.PasswordHash">
+<br>
+<select class="form-control"
+[(ngModel)]="user.role">
+
+<option value="">Select Role</option>
+<option value="User">User</option>
+<option value="Admin">Admin</option>
+
+</select>
+
+<br>
+
+<button class="btn btn-primary"
+(click)="register()">
+Register
+</button>
+
+</div>
